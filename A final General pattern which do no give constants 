@@ -1,0 +1,23 @@
+#include <iostream>
+#include <regex>
+#include <string>
+
+int main() {
+    // Define the regex pattern
+    std::regex parse(R"([+-]?\s*\d+[a-zA-Z\^]+\d+|\s*[+-*/]+|[+-]?\s*\d+[a-z]|[+-]?\s*x\^\d+|[+-]?\s*x)");
+
+    // Input string
+    std::string input;
+    std::cout << "Enter an algebraic expression: ";
+    std::getline(std::cin, input);
+
+    // Use regex_search with a while loop
+    std::smatch match;
+    while (std::regex_search(input, match, parse)) {
+        std::cout << "Matched token: " << match.str() << '\n';
+        // Remove the matched part from the string
+        input = match.suffix();
+    }
+
+    return 0;
+}
