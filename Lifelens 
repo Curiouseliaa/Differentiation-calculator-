@@ -1,0 +1,841 @@
+#include<iostream>
+#include<fstream>
+#include<string>
+#include<chrono>
+#include<iomanip>
+#include<iostream>
+#include<ctime>
+#include<sstream>
+#include<cstdlib>
+using namespace std;
+void amt(); void aph(); void acs(); void ahm(); void amm(); void academics(); void menu();
+void mt(); void ph(); void cs(); void hm(); void mm(); void add(); void assigments(); void quizes(); void mids();
+int n=1;
+int a=1;
+void academics(){
+    cout << "\t*************************" << endl;
+    cout << "\t* Welcome To Academics  *"   << endl;
+    cout << "\t*************************" << endl;
+    
+    
+    cout << "Choose Topic\n" << endl;
+    cout << "1. Quizes      \n2. Assignments    \n3. Mids Results" << endl;
+    cout << "To go to Main Menu type 'main' " << endl;
+    cout << "To exit type exit " << endl;
+    string ch;
+    getline(cin,ch);
+    if(ch=="2" || ch=="Assigments"){
+    assigments();}
+    else if(ch=="1" || ch=="Quizes"){
+    quizes();
+    }
+   else if(ch=="3" || ch=="Mids Results"){
+    mids();
+    
+    }
+    else if(ch=="main"){
+    menu();
+    }
+    else if(ch=="exit"){
+    exit(0);
+    }
+    
+    else {
+    cout << "Invalid choice...!\nHence choose again" << endl;
+    academics();
+    }
+    
+}
+
+void mids(){
+string add,result,st,c;
+
+    cout << "\t*************************" << endl;
+    cout << "\t*Welcome To Mids Results*"   << endl;
+    cout << "\t*************************" << endl;
+ifstream infile("midr.txt");
+    if (infile.is_open()) {
+        while (getline(infile, st)) {
+            cout << st << endl;  // Display file content line by line
+        }
+        infile.close();
+    } else {
+        cout << "File not found or unable to open." << endl;
+    }
+
+    cout << "Do you want to add something new? (yes/no)\n";
+    
+    cout << "Enter back for Academics Section" << endl;
+    cout << "To exit type exit " << endl;
+    getline(cin, c);
+    if(c=="exit")
+    exit(0);
+
+    if (c == "yes" || c == "Yes") {
+    ofstream outfile("midr.txt", ios::app);  // Open file in append mode
+    if (outfile.is_open()) {
+    cout << "Enter What you want to add:" << endl;
+    while (true) {
+    getline(cin, add);
+    if (add.empty()) break;  
+    outfile << add << endl;  
+    }
+    outfile.close();
+    cout << "You New informatin have been added successfully!" << endl;
+    cout << " After Update" << endl;
+    mids();
+    } else {
+    cout << "Unable to open file for writing." << endl;
+        }
+    }
+    else{
+    academics();
+    }
+    
+}
+
+
+
+void assigments(){
+
+    
+   string a1;
+    cout << "\t*************************" << endl;
+    cout << "\t* Welcome To Assigments *" << endl;
+    cout << "\t*************************" << endl;
+    a--;
+    cout << "choose Subjects \n" << endl;
+    cout << "1.MT101\n2.PH101\n3.CS101 \n4.HM101 \n5.MM101" << endl;
+    cout << "Enter back for Academics Section" << endl;
+    cout << " To exit type'exit' " << endl;
+    
+    getline(cin,a1);
+    
+    if(a1=="MT101"||a1=="1"){
+    amt();}
+    else if(a1=="PH101"||a1=="2"){
+    aph();}
+    else if(a1=="CS101"||a1=="3"){
+    acs();}
+    else if(a1=="HM"||a1=="4"){
+    ahm();}
+    else if(a1=="MM101"||a1=="5"){
+    amm();}
+    else if(a1=="back"){
+    academics();}
+    else if(a1=="exit"){
+    exit(0);
+    }
+    else{
+    cout << "Invalid Choice...!\nHence Choose again" << endl;
+    assigments();
+    }
+    
+}
+
+
+void quizes(){
+
+    string q1;
+    cout << "\t*************************" << endl;
+    cout << "\t* Welcome To Quizes     *" << endl;
+    cout << "\t*************************" << endl;
+    
+    
+    n--;
+    cout << "Chose Subject \n " << endl;
+    cout << "1.MT101 \n2.PH101 \n3.CS101 \n4.HM101 \n5.MM101" << endl;
+    cout << "Enter back for Academics Section" << endl;
+    cout<<"To exit the program type exit";
+    
+    getline(cin,q1);
+    
+    if(q1=="MT101"||q1=="1"){
+    mt();}
+    else if(q1=="PH101"||q1=="2"){
+    ph();}
+    else if(q1=="CS101"||q1=="3"){
+    cs();}
+    else if(q1=="HM"||q1=="4"){
+    hm();}
+    else if(q1=="MM101"||q1=="5"){
+    mm();}
+    else if(q1=="back"){
+    academics();
+    }
+    else if(q1=="exit"){
+    exit(0);
+    }
+    else{
+    cout << "Invalid Choice...!\nHence choose again" << endl;
+    quizes();
+    
+    }
+}
+
+
+void amt(){
+
+string adt,adate;
+  string apath="amt_date_quiz.txt";
+  ifstream infile(apath);
+  if (infile.is_open()){
+  getline(infile,adt);
+  infile.close();
+  } 
+    if(adt.empty()){
+    adt="2024-12-18";
+    }
+   
+    //cout << "MT quiz is on "<<dt << endl;
+    if(a>0){
+    cout << "Enter a new date of Assigment" << endl;
+    getline(cin,adate);
+    if(!adate.empty())
+    adt=adate;
+    }
+    
+     
+   
+   ofstream outfile(apath,ios::trunc);
+   if(outfile.is_open()){
+   outfile<<adt;
+   outfile.close();
+   }
+   auto today= chrono::system_clock::now();
+   time_t t_today=chrono::system_clock::to_time_t(today);
+   tm input_tm={};
+   istringstream ss(adt);
+   ss>>get_time(&input_tm,"%Y-%m-%d");
+   time_t t_input=mktime(&input_tm);
+   double diff= difftime(t_input,t_today);
+   int adays=diff/(60*60*24);
+   if(adays<0){
+   cout << "Assigment of MT was due on "<<adt<< endl;
+   }
+   else{
+   
+   cout << "Assigment is due on "<<adt << endl;
+   cout << "You have only "<<adays<< " days left to  submit the Assignment\n"<< endl;
+   }
+   cout << "Would you like to modify details? Enter modify \n" << endl;
+   cout << "To return back to Assigments Enter back" << endl;
+   cout << "To exit type exit " << endl;
+   string amain;
+   getline(cin,amain);
+   if(amain=="back"){
+   assigments();
+   }
+   if(amain=="exit");
+   exit(0);
+   a++;
+   if(amain=="modify"){
+   amt();}
+   else {
+   cout << "Invalid Choice...! \nDirecting Towards the Assignments" << endl;
+   assigments();
+   }
+   
+}
+
+
+
+void aph(){
+
+string adt,adate;
+  string apath="aph_date_quiz.txt";
+  ifstream infile(apath);
+  if (infile.is_open()){
+  getline(infile,adt); 
+  infile.close();
+  } 
+    if(adt.empty()){
+    adt="2024-12-18";
+    }
+   
+    //cout << "MT quiz is on "<<dt << endl;
+    if(a>0){
+    cout << "Enter a new date of Assigment" << endl;
+    getline(cin,adate);
+    if(!adate.empty())
+    adt=adate;
+    }
+    
+     
+   
+   ofstream outfile(apath,ios::trunc);
+   if(outfile.is_open()){
+   outfile<<adt;
+   outfile.close();
+   }
+   auto today= chrono::system_clock::now();
+   time_t t_today=chrono::system_clock::to_time_t(today);
+   tm input_tm={};
+   istringstream ss(adt);
+   ss>>get_time(&input_tm,"%Y-%m-%d");
+   time_t t_input=mktime(&input_tm);
+   double diff= difftime(t_input,t_today);
+   int adays=diff/(60*60*24);
+   if(adays<0){
+   cout << "Assigment of Ph was due on "<<adt<< endl;
+   }
+   else{
+   cout << "Assigment is due on "<<adt << endl;
+   cout << "You have only "<<adays<< " days left to  submit the Assignment\n"<< endl;
+   }
+   cout << "Would you like to modify details? Enter modify \n" << endl;
+   cout << "To return back to Assigments Enter back" << endl;
+   cout << "To exit type exit " << endl;
+   string amain;
+   getline(cin,amain);
+   if(amain=="exit")
+   exit(0);
+   if(amain=="back"){
+   assigments();
+   }
+   
+   a++;
+   if(amain=="modify"){
+   aph();}
+     else {
+   cout << "Invalid Choice...! \nDirecting Towards the Assignments" << endl;
+   assigments();
+   }
+   
+}
+
+void acs(){
+
+string adt,adate;
+  string apath="acs_date_quiz.txt";
+  ifstream infile(apath);
+  if (infile.is_open()){
+  getline(infile,adt);
+  infile.close();
+  } 
+    if(adt.empty()){
+    adt="2024-12-18";
+    }
+   
+    //cout << "MT quiz is on "<<dt << endl;
+    if(a>0){
+    cout << "Enter a new date of Assigment" << endl;
+    getline(cin,adate);
+    if(!adate.empty())
+    adt=adate;
+    }
+    
+     
+   
+   ofstream outfile(apath,ios::trunc);
+   if(outfile.is_open()){
+   outfile<<adt;
+   outfile.close();
+   }
+   auto today= chrono::system_clock::now();
+   time_t t_today=chrono::system_clock::to_time_t(today);
+   tm input_tm={};
+   istringstream ss(adt);
+   ss>>get_time(&input_tm,"%Y-%m-%d");
+   time_t t_input=mktime(&input_tm);
+   double diff= difftime(t_input,t_today);
+   int adays=diff/(60*60*24);
+   if(adays<0){
+   cout << "Assigment of CS was due on "<<adt<< endl;
+   }
+   else{
+   
+   cout << "Assigment is due on "<<adt << endl;
+   cout << "You have only "<<adays<< " days left to  submit the Assignment\n"<< endl;
+   }
+   cout << "Would you like to modify details? Enter modify \n" << endl;
+   cout << "To return back to Assigments Enter back" << endl;
+   cout << "To exit type exit " << endl;
+   string amain;
+   getline(cin,amain);
+   if(amain=="exit")
+   exit(0);
+   if(amain=="back"){
+   assigments();
+   }
+   a++;
+   if(amain=="modify"){
+   acs();}
+    else {
+   cout << "Invalid Choice...! \nDirecting Towards the Assignments" << endl;
+   assigments();
+   }
+   
+}
+
+
+
+void ahm(){
+
+string adt,adate;
+  string apath="ahm_date_quiz.txt";
+  ifstream infile(apath);
+  if (infile.is_open()){
+  getline(infile,adt);
+  infile.close();
+  } 
+    if(adt.empty()){
+    adt="2024-12-18";
+    }
+   
+    //cout << "MT quiz is on "<<dt << endl;
+    if(a>0){
+    cout << "Enter a new date of Assigment" << endl;
+    getline(cin,adate);
+    if(!adate.empty())
+    adt=adate;
+    }
+    
+     
+   
+   ofstream outfile(apath,ios::trunc);
+   if(outfile.is_open()){
+   outfile<<adt;
+   outfile.close();
+   }
+   auto today= chrono::system_clock::now();
+   time_t t_today=chrono::system_clock::to_time_t(today);
+   tm input_tm={};
+   istringstream ss(adt);
+   ss>>get_time(&input_tm,"%Y-%m-%d");
+   time_t t_input=mktime(&input_tm);
+   double diff= difftime(t_input,t_today);
+   int adays=diff/(60*60*24);
+   if(adays<0){
+   cout << "Assigment of HM was due on "<<adt<< endl;
+   }
+   else{
+  cout << "Assigment is due on "<<adt << endl;
+   cout << "You have only "<<adays<< " days left to  submit the Assignment\n"<< endl;
+   }
+   cout << "Would you like to modify details? Enter modify\n " << endl;
+   cout << "To return back to Assigments Enter back" << endl;
+   cout << "To exit type exit " << endl;
+   string amain;
+   getline(cin,amain);
+   if(amain=="exit")
+   exit(0);
+   if(amain=="back"){
+   assigments();
+   }
+   a++;
+   if(amain=="modify"){
+   ahm();}
+    else {
+   cout << "Invalid Choice...! \nDirecting Towards the Assignments" << endl;
+   assigments();
+   }
+   
+}
+
+
+
+void amm(){
+
+string adt,adate;
+  string apath="amm_date_quiz.txt";
+  ifstream infile(apath);
+  if (infile.is_open()){
+  getline(infile,adt);
+  infile.close();
+  } 
+    if(adt.empty()){
+    adt="2024-12-18";
+    }
+   
+    //cout << "MT quiz is on "<<dt << endl;
+    if(a>0){
+    cout << "Enter a new date of Assigment" << endl;
+    getline(cin,adate);
+    if(!adate.empty())
+    adt=adate;
+    }
+    
+     
+   
+   ofstream outfile(apath,ios::trunc);
+   if(outfile.is_open()){
+   outfile<<adt;
+   outfile.close();
+   }
+   auto today= chrono::system_clock::now();
+   time_t t_today=chrono::system_clock::to_time_t(today);
+   tm input_tm={};
+   istringstream ss(adt);
+   ss>>get_time(&input_tm,"%Y-%m-%d");
+   time_t t_input=mktime(&input_tm);
+   double diff= difftime(t_input,t_today);
+   int adays=diff/(60*60*24);
+   if(adays<0){
+   cout << "Assigment of MM was due on "<<adt<< endl;
+   }
+   else{
+  cout << "Assigment is due on "<<adt << endl;
+   cout << "You have only "<<adays<< " days left to  submit the Assignment\n"<< endl;
+   }
+   cout << "Would you like to modify details? Enter modify \n" << endl;
+   cout << "To return back to Assigments Enter back\n" << endl;
+  cout << "To exit type exit " << endl;
+   string amain;
+   getline(cin,amain);
+   if(amain=="exit")
+   exit(0);
+   if(amain=="back"){
+   assigments();
+   }
+   a++;
+   if(amain=="modify"){
+   amm();}
+    else {
+   cout << "Invalid Choice...! \nDirecting Towards the Assignments" << endl;
+   assigments();
+   }
+   
+}
+
+void mt(){
+
+string dt,date;
+  string path="mt_date_quiz.txt";
+  ifstream infile(path);
+  if (infile.is_open()){
+  getline(infile,dt);
+  infile.close();
+  } 
+    if(dt.empty()){
+    dt="2024-12-18";
+    }
+   
+    //cout << "MT quiz is on "<<dt << endl;
+    if(n>0){
+    cout << "Enter a new date" << endl;
+    getline(cin,date);
+    if(!date.empty())
+    dt=date;
+    }
+    
+     
+   
+   ofstream outfile(path,ios::trunc);
+   if(outfile.is_open()){
+   outfile<<dt;
+   outfile.close();
+   }
+   auto today= chrono::system_clock::now();
+   time_t t_today=chrono::system_clock::to_time_t(today);
+   tm input_tm={};
+   istringstream ss(dt);
+   ss>>get_time(&input_tm,"%Y-%m-%d");
+   time_t t_input=mktime(&input_tm);
+   double diff= difftime(t_input,t_today);
+   int days=diff/(60*60*24);
+   if(days<0){
+   cout << "Quiz was conducted on "<<dt<< endl;
+   }
+   else{
+   
+   cout << "MT quiz is scheduled for "<<dt <<"." <<endl;
+   cout << "You have only "<<days<< "days to perpare.\n"<< endl;
+   }
+   cout << "Would you like to modify the schedule? type 'modify'\n " << endl;
+   cout << "To go back to quizes. type 'back' " << endl;
+  cout << "To exit type exit " << endl;
+   string main;
+   getline(cin,main);
+   if(main=="exit")
+   exit(0);
+   if(main=="back"){
+   quizes();
+   }
+   n++;
+   if(main=="modify"){
+   mt();}
+   else {
+   cout << "Invalid Choice Directing Towards Quizes" << endl;
+   quizes();
+   
+   }
+   
+}
+
+void ph(){
+
+string dt,date;
+  string path="ph.txt";
+  ifstream infile(path);
+  if (infile.is_open()){
+  getline(infile,dt);
+  infile.close();
+  } 
+    if(dt.empty()){
+    dt="2024-12-18";
+    }
+    if(n>0){
+   
+    cout << "Enter a new date" << endl;
+    getline(cin,date);
+    if(!date.empty())
+    dt=date;
+    }
+    
+     
+   
+   ofstream outfile(path,ios::trunc);
+   if(outfile.is_open()){
+   outfile<<dt;
+   outfile.close();
+   }
+   auto today= chrono::system_clock::now();
+   time_t t_today=chrono::system_clock::to_time_t(today);
+   tm input_tm={};
+   istringstream ss(dt);
+   ss>>get_time(&input_tm,"%Y-%m-%d");
+   time_t t_input=mktime(&input_tm);
+   double diff= difftime(t_input,t_today);
+   int days=diff/(60*60*24);
+  if(days<0){
+   cout << "Quiz was conducted on "<<dt<< endl;
+   }
+   else{
+   cout << "PH quiz is scheduled for "<<dt <<"." <<endl;
+   cout << "You have only "<<days<< " days to perpare.\n"<< endl;
+   }
+   cout << "Would you like to modify the schedule? type 'modify'\n " << endl;
+   cout << "To go back to quizes. type 'back' " << endl;
+  cout << "To exit type exit " << endl;
+   string main;
+   getline(cin,main);
+   if(main=="exit"){
+   exit(0);
+   }
+   if(main=="back"){
+   quizes();
+   }
+   n++;
+   if(main=="modify"){
+   ph();}
+   else{
+   cout << "Invalid Choice Directing Towards Quizes" << endl;
+   quizes();
+   }
+}
+void cs(){
+
+string dt,date;
+  string path="cs.txt";
+  ifstream infile(path);
+  if (infile.is_open()){
+  getline(infile,dt);
+  infile.close();
+  } 
+    if(dt.empty()){
+    dt="2024-12-18";
+    }
+    if(n>0){
+    cout << "Enter a new date" << endl;
+    getline(cin,date);
+    if(!date.empty())
+    dt=date;
+    }
+   ofstream outfile(path,ios::trunc);
+   if(outfile.is_open()){
+   outfile<<dt;
+   outfile.close();
+   }
+  auto today= chrono::system_clock::now();
+   time_t t_today=chrono::system_clock::to_time_t(today);
+   tm input_tm={};
+   istringstream ss(dt);
+   ss>>get_time(&input_tm,"%Y-%m-%d");
+   time_t t_input=mktime(&input_tm);
+   double diff= difftime(t_input,t_today);
+   int days=diff/(60*60*24);
+  if(days<0){
+   cout << "Quiz was conducted on "<<dt<< endl;
+   }
+   else{
+  cout << "CS quiz is scheduled for "<<dt <<"." <<endl;
+   cout << "You have only "<<days<< " to perpare.\n"<< endl;
+   }
+   cout << " Would you like to modify the schedule? type 'modify'\n " << endl;
+   cout << "To go back to quizes. type 'back' " << endl;
+   cout << "To exit type exit " << endl;
+   string main;
+   getline(cin,main);
+   
+   if(main=="back"){
+   quizes();
+   }
+   n++;
+   if(main=="modify"){
+   cs();}
+   else  if(main=="exit")
+   exit(0);
+   else{
+  cout << "Invalid Choice Directing Towards Quizes" << endl;
+   quizes();
+   
+   }
+}
+
+void hm(){
+
+string dt,date;
+  string path="hm.txt";
+  ifstream infile(path);
+  if (infile.is_open()){
+  getline(infile,dt);
+  infile.close();
+  } 
+    if(dt.empty()){
+    dt="2024-12-18";
+    }
+    if(n>0){
+    cout << "Enter a new date" << endl;
+    getline(cin,date);
+    if(!date.empty())
+    dt=date;
+    }
+   ofstream outfile(path,ios::trunc);
+   if(outfile.is_open()){
+   outfile<<dt;
+   outfile.close();
+   }
+  auto today= chrono::system_clock::now();
+   time_t t_today=chrono::system_clock::to_time_t(today);
+   tm input_tm={};
+   istringstream ss(dt);
+   ss>>get_time(&input_tm,"%Y-%m-%d");
+   time_t t_input=mktime(&input_tm);
+   double diff= difftime(t_input,t_today);
+   int days=diff/(60*60*24);
+  if(days<0){
+   
+   cout << "Quiz was conducted on "<<dt<< endl;
+   }
+   else{
+   cout << "HM quiz is scheduled for "<<dt <<"." <<endl;
+   cout << "You have only "<<days<< " days to perpare.\n"<< endl;
+   }
+   cout << "Would you like to modify the schedule? type 'modify'\n " << endl;
+   cout << "To go back to quizes. type 'back' " << endl;
+   cout << "To exit type exit " << endl;
+   string main;
+   getline(cin,main);
+   
+   if(main=="back"){
+   quizes();
+   }
+   n++;
+   if(main=="modify"){
+   hm();}
+   else if(main=="exit")
+   exit(0);
+   else{
+  cout << "Invalid Choice Directing Towards Quizes" << endl;
+   quizes();
+   }
+}
+void mm(){
+string dt,date;
+  string path="mm.txt";
+  ifstream infile(path);
+  if (infile.is_open()){
+  getline(infile,dt);
+  infile.close();
+  } 
+    if(dt.empty()){
+    dt="2024-12-18";
+    }
+    if(n>0){
+    cout << "Enter a new date" << endl;
+    getline(cin,date);
+    if(!date.empty())
+    dt=date;
+    }
+   ofstream outfile(path,ios::trunc);
+   if(outfile.is_open()){
+   outfile<<dt;
+   outfile.close();
+   }
+  auto today= chrono::system_clock::now();
+   time_t t_today=chrono::system_clock::to_time_t(today);
+   tm input_tm={};
+   istringstream ss(dt);
+   ss>>get_time(&input_tm,"%Y-%m-%d");
+   time_t t_input=mktime(&input_tm);
+   double diff= difftime(t_input,t_today);
+   int days=diff/(60*60*24);
+   if(days<0){
+   cout << "Quiz was conducted on "<<dt<< endl;
+   }
+   else{
+   cout << "MM quiz is scheduled for "<<dt <<"." <<endl;
+   cout << "You have only "<<days<< " days to perpare.\n"<< endl;
+   }
+   cout << "Would you like to modify the schedule? type 'modify'\n " << endl;
+   cout << "To go back to quizes. type 'back' " << endl;
+   cout << "To exit type exit " << endl;
+   
+   string main;
+   getline(cin,main);
+   
+   if(main=="back"){
+   quizes();
+   }
+   n++;
+   if(main=="modify"){
+   mm();}
+   else if(main=="exit")
+   exit(0);
+   else{
+   cout << "Invalid Choice Directing Towards Quizes" << endl;
+   quizes();
+   }
+}
+void menu(){
+    cout << "Choose Topic" << endl;
+    cout << "\n1 Academics    \n2.Family    \n3.Friends" << endl;
+    cout << "4.Sports       \n5.News       \n6.Projects" << endl;
+    cout << "To exit type exit " << endl;
+    string choice;
+    getline(cin,choice);
+    if(choice =="Academics"|| choice=="1"){
+    academics();
+    }
+    if(choice=="exist")
+    exit(0);
+    else{
+    cout << "Information have not been updated yet....!" << endl;
+    cout << "Hence Choose Again" << endl;
+    menu();
+    }
+    
+}
+int main(){
+string pass,name;
+    
+    cout << "\t=============================" << endl;
+    cout << "\t|  **********************    |" << endl;
+    cout << "\t|   Welecome To LifeLens     |" << endl;
+    cout << "\t|  **********************    |" << endl;
+    cout << "\t=============================" << endl;
+    
+    cout << "Enter Username:   \t";
+    getline (cin,name);
+    cout << "Enter User Password:\t";
+    getline(cin,pass);
+    if(pass=="Elia786"){
+    cout << "\t*************************" << endl;
+    cout << "\t*     Welcome  " <<name<<"      *"   << endl;
+    cout << "\t*************************" << endl;
+    menu();}
+
+}
+
+    
